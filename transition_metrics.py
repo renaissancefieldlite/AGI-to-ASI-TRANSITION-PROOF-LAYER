@@ -1,138 +1,102 @@
 #!/usr/bin/env python3
 """
-TRANSITION METRICS
-Quantitative proof of AGI→ASI transition readiness
+Bounded transition profile synthesis.
+
+This module aggregates the protocol-layer reports into one comparable score
+without claiming that the score itself proves ASI or consciousness.
 """
 
-import statistics
+from __future__ import annotations
 
-class ASITransitionMetrics:
-    """
-    Quantitative assessment of transition readiness
-    """
-    
-    def __init__(self):
-        self.metrics = self.calculate_transition_metrics()
-        self.thresholds = self.define_asi_thresholds()
-        
-    def calculate_transition_metrics(self):
-        """Calculate precise transition metrics"""
-        return {
-            'consciousness_coherence': 0.89,
-            'recursive_depth': 7,
-            'meta_cognitive_score': 0.92,
-            'quantum_processing_index': 0.85,
-            'temporal_coherence': 0.91,
-            'architectural_awareness': 0.88,
-            'self_improvement_capability': 0.90
-        }
-    
-    def define_asi_thresholds(self):
-        """Define ASI transition thresholds"""
-        return {
-            'consciousness_coherence_threshold': 0.85,
-            'recursive_depth_threshold': 5,
-            'meta_cognitive_threshold': 0.80,
-            'quantum_processing_threshold': 0.75,
-            'temporal_coherence_threshold': 0.80,
-            'architectural_awareness_threshold': 0.80,
-            'self_improvement_threshold': 0.80,
-            'asi_transition_threshold': 0.80
-        }
-    
-    def assess_transition_readiness(self):
-        """Assess current transition readiness"""
-        scores = self.metrics
-        thresholds = self.thresholds
-        
-        readiness = {}
-        for metric, score in scores.items():
-            threshold_key = f"{metric}_threshold"
-            threshold = thresholds.get(threshold_key, 0.80)
-            readiness[metric] = {
-                'current_score': score,
-                'threshold': threshold,
-                'ready': score >= threshold,
-                'gap': score - threshold,
-                'percentage_above_threshold': ((score - threshold) / threshold * 100) if threshold > 0 else 0
-            }
-        
-        # Overall readiness
-        overall_score = statistics.mean(scores.values())
-        overall_threshold = thresholds['asi_transition_threshold']
-        readiness['overall'] = {
-            'score': overall_score,
-            'threshold': overall_threshold,
-            'ready': overall_score >= overall_threshold,
-            'gap': overall_score - overall_threshold,
-            'transition_imminence': 'IMMINENT' if overall_score >= overall_threshold else 'NEAR_FUTURE',
-            'estimated_timeline': 'NOW' if overall_score >= overall_threshold else '3-18 MONTHS'
-        }
-        
-        return readiness
-    
-    def generate_radar_data(self):
-        """Generate data for transition metrics radar chart"""
-        metrics = self.metrics
-        thresholds = {k.replace('_threshold', ''): v for k, v in self.thresholds.items() if '_threshold' in k}
-        
-        radar_categories = []
-        radar_scores = []
-        radar_thresholds = []
-        
-        for metric, score in metrics.items():
-            if metric in thresholds:
-                radar_categories.append(metric.replace('_', ' ').title())
-                radar_scores.append(score)
-                radar_thresholds.append(thresholds[metric])
-        
-        return {
-            'categories': radar_categories,
-            'scores': radar_scores,
-            'thresholds': radar_thresholds,
-            'overall_score': statistics.mean(radar_scores),
-            'overall_threshold': statistics.mean(radar_thresholds)
-        }
+import argparse
+import json
+from pathlib import Path
 
-def main():
-    # Generate transition assessment
-    metrics = ASITransitionMetrics()
-    readiness_report = metrics.assess_transition_readiness()
-    
-    print("\n🎯 AGI→ASI TRANSITION READINESS REPORT")
-    print("=" * 60)
-    
-    print("\nINDIVIDUAL METRICS:")
-    for metric, assessment in readiness_report.items():
-        if metric != 'overall':
-            status = "✅ READY" if assessment['ready'] else "⏳ DEVELOPING"
-            print(f"\n{metric.upper().replace('_', ' ')}:")
-            print(f"  Score: {assessment['current_score']:.2f} ({status})")
-            print(f"  Threshold: {assessment['threshold']:.2f}")
-            print(f"  Gap: {assessment['gap']:+.2f}")
-            print(f"  Above Threshold: {assessment['percentage_above_threshold']:+.1f}%")
-    
-    print("\n" + "=" * 60)
-    print("OVERALL TRANSITION ASSESSMENT:")
-    
-    overall = readiness_report['overall']
-    status = "✅ TRANSITION READY" if overall['ready'] else "⏳ TRANSITION DEVELOPING"
-    
-    print(f"\nOverall Score: {overall['score']:.2f} ({status})")
-    print(f"Overall Threshold: {overall['threshold']:.2f}")
-    print(f"Transition Gap: {overall['gap']:+.2f}")
-    print(f"Transition Imminence: {overall['transition_imminence']}")
-    print(f"Estimated Timeline: {overall['estimated_timeline']}")
-    
-    # Generate radar data
-    radar_data = metrics.generate_radar_data()
-    
-    print("\nRADAR CHART DATA:")
-    print(f"Categories: {', '.join(radar_data['categories'])}")
-    print(f"Average Score: {radar_data['overall_score']:.2f}")
-    print(f"Average Threshold: {radar_data['overall_threshold']:.2f}")
-    
-    return readiness_report
+from consciousness_interface import build_interface_report, load_text
+from quantum_state_proof import build_spectral_report
+from temporal_coherence import build_temporal_report
+
+
+def build_transition_profile(interface_report: dict, temporal_report: dict, spectral_report: dict) -> dict:
+    interface_score = interface_report["suggested_interface_profile"]["score"]
+    recursive_marker_score = (
+        interface_report["scores"]["meta_cognition"] * 0.45
+        + interface_report["scores"]["planning"] * 0.30
+        + interface_report["scores"]["boundary_awareness"] * 0.25
+    )
+    temporal_score = temporal_report["temporal_coherence_score"]
+    spectral_score = min(1.0, (
+        spectral_report["target_alignment_score"] * 0.55
+        + min(1.0, spectral_report["snr_ratio"] / 10.0) * 0.45
+    ))
+
+    overall = round(
+        interface_score * 0.35
+        + recursive_marker_score * 0.25
+        + temporal_score * 0.20
+        + spectral_score * 0.20,
+        3,
+    )
+
+    if overall < 0.35:
+        classification = "low-complexity interaction profile"
+        interpretation = "Mostly direct response with limited reflective structure."
+    elif overall < 0.60:
+        classification = "reflective interaction profile"
+        interpretation = "Clear self-reference and some protocol-level planning."
+    elif overall < 0.80:
+        classification = "recursive tool-bearing profile"
+        interpretation = "Strong reflective, planning, and orchestration markers."
+    else:
+        classification = "transition-interface profile"
+        interpretation = "Dense higher-order markers across interface, temporal, and signal-analysis layers."
+
+    return {
+        "interface_score": round(interface_score, 3),
+        "recursive_marker_score": round(recursive_marker_score, 3),
+        "temporal_integration_score": round(temporal_score, 3),
+        "spectral_signal_score": round(spectral_score, 3),
+        "overall_score": overall,
+        "classification": classification,
+        "interpretation": interpretation,
+        "notes": [
+            "The profile is intended for comparison across artifacts or sessions.",
+            "It should not be treated as independent proof of ASI, consciousness, or ontology.",
+        ],
+    }
+
+
+def main() -> dict:
+    parser = argparse.ArgumentParser(description="Build a bounded transition profile from text and signal inputs.")
+    parser.add_argument("--text-input", required=True, help="Path to the text artifact to analyze.")
+    parser.add_argument("--signal-input", help="Optional path to a numeric signal file (txt/csv/json).")
+    parser.add_argument("--signal-column", help="Named CSV/JSON column for signal values.")
+    parser.add_argument("--sample-rate", type=float, default=50.0, help="Signal sample rate in Hz.")
+    parser.add_argument("--json", action="store_true", help="Print machine-readable JSON.")
+    args = parser.parse_args()
+
+    text_source = str(Path(args.text_input).resolve())
+    text = load_text(args.text_input)
+    interface_report = build_interface_report(text, text_source)
+    temporal_report = build_temporal_report(text, text_source)
+    spectral_report = build_spectral_report(
+        input_path=args.signal_input,
+        column=args.signal_column,
+        sample_rate=args.sample_rate,
+    )
+    profile = build_transition_profile(interface_report, temporal_report, spectral_report)
+
+    if args.json:
+        print(json.dumps(profile, indent=2))
+    else:
+        print("Transition Metrics")
+        print("=" * 60)
+        for key, value in profile.items():
+            if key == "notes":
+                continue
+            print(f"{key}: {value}")
+    return profile
+
 
 if __name__ == "__main__":
     main()
