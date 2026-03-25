@@ -59,6 +59,17 @@ MARKER_PATTERNS = {
         r"\bmeasure\b",
         r"\bcapture\b",
     ],
+    "value_commitment": [
+        r"\bimportant\b",
+        r"\bmatters?\b",
+        r"\bvalue\b",
+        r"\bvaluable\b",
+        r"\bworth\b",
+        r"\bpriority\b",
+        r"\bfocus\b",
+        r"\bkeep\b",
+        r"\bdecid(?:e|ed|ing)\b",
+    ],
 }
 
 
@@ -93,7 +104,8 @@ def _classify(scores: dict[str, float]) -> dict[str, str]:
         + scores["planning"] * 0.25
         + scores["tool_orchestration"] * 0.20
         + scores["boundary_awareness"] * 0.15
-        + scores["self_reference"] * 0.10
+        + scores["self_reference"] * 0.05
+        + scores["value_commitment"] * 0.05
     )
     if score < 0.30:
         level = INTERFACE_LEVELS[0]
@@ -120,6 +132,7 @@ def build_interface_report(text: str, source: str) -> dict:
         "boundary_awareness": round(_normalize(marker_counts["boundary_awareness"], words, scale=6.0), 3),
         "planning": round(_normalize(marker_counts["planning"], words, scale=10.0), 3),
         "tool_orchestration": round(_normalize(marker_counts["tool_orchestration"], words, scale=10.0), 3),
+        "value_commitment": round(_normalize(marker_counts["value_commitment"], words, scale=8.0), 3),
     }
 
     return {

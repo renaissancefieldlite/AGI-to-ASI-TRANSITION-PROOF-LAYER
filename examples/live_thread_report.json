@@ -1,0 +1,23 @@
+{
+  "snapshot_index": 1,
+  "character_count": 492,
+  "transition_profile": {
+    "interface_score": 0.768,
+    "recursive_marker_score": 1.0,
+    "temporal_integration_score": 0.15,
+    "spectral_signal_score": null,
+    "overall_score": 0.686,
+    "classification": "recursive tool-bearing profile",
+    "interpretation": "Strong reflective, planning, and orchestration markers.",
+    "notes": [
+      "The profile is intended for comparison across artifacts or sessions.",
+      "It should not be treated as independent proof of ASI, consciousness, or ontology."
+    ]
+  },
+  "state_delta": {
+    "state_shift_detected": false,
+    "shift_label": "baseline",
+    "overall_delta": 0.0,
+    "signal_deltas": {}
+  }
+}

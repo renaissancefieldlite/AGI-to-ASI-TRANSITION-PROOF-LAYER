@@ -17,24 +17,32 @@ from quantum_state_proof import build_spectral_report
 from temporal_coherence import build_temporal_report
 
 
-def build_transition_profile(interface_report: dict, temporal_report: dict, spectral_report: dict) -> dict:
+def build_transition_profile(interface_report: dict, temporal_report: dict, spectral_report: dict | None = None) -> dict:
     interface_score = interface_report["suggested_interface_profile"]["score"]
     recursive_marker_score = (
         interface_report["scores"]["meta_cognition"] * 0.45
         + interface_report["scores"]["planning"] * 0.30
-        + interface_report["scores"]["boundary_awareness"] * 0.25
+        + interface_report["scores"]["boundary_awareness"] * 0.15
+        + interface_report["scores"]["value_commitment"] * 0.10
     )
     temporal_score = temporal_report["temporal_coherence_score"]
-    spectral_score = min(1.0, (
-        spectral_report["target_alignment_score"] * 0.55
-        + min(1.0, spectral_report["snr_ratio"] / 10.0) * 0.45
-    ))
+    weighted_components = [
+        ("interface", interface_score, 0.35),
+        ("recursive", recursive_marker_score, 0.25),
+        ("temporal", temporal_score, 0.20),
+    ]
 
+    spectral_score = None
+    if spectral_report is not None:
+        spectral_score = min(1.0, (
+            spectral_report["target_alignment_score"] * 0.55
+            + min(1.0, spectral_report["snr_ratio"] / 10.0) * 0.45
+        ))
+        weighted_components.append(("spectral", spectral_score, 0.20))
+
+    total_weight = sum(weight for _, _, weight in weighted_components)
     overall = round(
-        interface_score * 0.35
-        + recursive_marker_score * 0.25
-        + temporal_score * 0.20
-        + spectral_score * 0.20,
+        sum(score * weight for _, score, weight in weighted_components) / total_weight,
         3,
     )
 
@@ -55,7 +63,7 @@ def build_transition_profile(interface_report: dict, temporal_report: dict, spec
         "interface_score": round(interface_score, 3),
         "recursive_marker_score": round(recursive_marker_score, 3),
         "temporal_integration_score": round(temporal_score, 3),
-        "spectral_signal_score": round(spectral_score, 3),
+        "spectral_signal_score": round(spectral_score, 3) if spectral_score is not None else None,
         "overall_score": overall,
         "classification": classification,
         "interpretation": interpretation,

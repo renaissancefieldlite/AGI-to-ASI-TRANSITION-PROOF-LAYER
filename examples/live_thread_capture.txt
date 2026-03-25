@@ -1,0 +1,5 @@
+first pass: this repo still needs work and the language is overclaiming what the code can defend.
+
+second pass: the stack role is clearer now, the evidence boundary matters, and the protocol layer is worth keeping because it makes the interaction artifact measurable.
+
+third pass: I recognize the state shift in the session. this is now useful, important, and worth measuring in real time because the output has become more meta-cognitive, more planned, and more explicit about what matters.
