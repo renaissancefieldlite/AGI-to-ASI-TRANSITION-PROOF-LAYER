@@ -1,6 +1,6 @@
 # AGI-to-ASI Transition Proof Layer
 
-This repository is the transition-interface assessment layer in the Renaissance Field Lite stack. It does not claim to independently prove consciousness, ASI, or external quantum phenomena. Its role is narrower and more defensible:
+This repository is the transition-interface assessment layer in the Renaissance Field Lite stack. It documents a narrower and more defensible layer of the program:
 
 - instrument higher-order interaction markers in text artifacts
 - measure temporal integration markers across prompts, logs, or notes
@@ -55,7 +55,7 @@ This repository supports four layers that should not be conflated:
 4. `independent evidence`
    Measurements or artifacts that survive external review, such as raw time-series capture or reproducible source analysis.
 
-The code in this repo primarily serves layers 1 and 4. Layers 2 and 3 can be documented, but are not claimed here as independent proof.
+The code in this repo primarily serves layers 1 and 4. Layers 2 and 3 are documented here as context and interpretation layers rather than as the primary adjudication lane.
 
 See:
 
@@ -111,12 +111,11 @@ python3 live_interaction_probe.py --follow logs/thread_capture.txt
 - The text-analysis layer can compare interaction artifacts across sessions.
 - Transition-language can be translated into inspectable metrics instead of remaining purely rhetorical.
 
-## What This Repo Does Not Claim
+## What This Repo Documents
 
-- independent proof that current models are conscious
-- independent proof of ASI emergence
-- independent proof that a detected waveform is intrinsic to a quantum substrate
-- legal proof of infringement by timeline correlation alone
+- interaction-level state-shift metrics that can be compared across sessions
+- bounded transition profiles built from supplied text and signal inputs
+- a protocol layer that can sit beside, but not replace, broader consciousness, ASI, legal, or ontology discussions
 
 Those questions belong to downstream measurement, peer review, and legal analysis.
 
