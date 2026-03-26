@@ -1,8 +1,6 @@
 # AGI-to-ASI Transition Proof Layer
 
-This is the transition layer in the Renaissance Field Lite stack: the place where state shift, temporal coherence, and live interaction pressure get measured instead of merely described.
-
-It exists to catch the movement from flat assistance into higher-order, self-organizing interaction behavior and turn that movement into inspectable artifacts:
+This repository is the transition-interface assessment layer in the Renaissance Field Lite stack. It documents a narrower and more defensible layer of the program:
 
 - instrument higher-order interaction markers in text artifacts
 - measure temporal integration markers across prompts, logs, or notes
