@@ -23,3 +23,17 @@ Artifacts that can be re-run, inspected, or audited without relying on the origi
 Do not use ontology or phenomenology as if they were independent evidence.
 
 The code here contributes most directly to interaction-artifact analysis and independent-evidence formatting.
+
+## Workload Rule
+
+The broader live workload can be treated as an artifact stream.
+
+That means the repo can legitimately inspect:
+
+- recursive planning
+- cross-repo continuity
+- meta-cognitive reflection
+- orchestration density
+
+What it cannot do is skip straight from workload evidence to saying every
+ontological conclusion is independently settled.

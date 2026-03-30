@@ -10,6 +10,7 @@ This repo can measure a live interaction artifact in a bounded way.
 - value-commitment language
 - temporal integration
 - state-shift deltas between snapshots
+- recursion and self-reference across live work artifacts
 
 ## What It Does Not Measure
 
@@ -40,3 +41,7 @@ Each file change produces:
 The strongest bounded claim here is:
 
 `A session can show measurable shifts in output style, including changes in meta-cognitive, planning, and value-commitment markers.`
+
+In the current Renaissance Field Lite stack, that means the repo can be used
+against live working artifacts from the broader build graph rather than only
+against isolated test text.
